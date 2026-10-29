@@ -1,9 +1,10 @@
 <resources>
     <style name="Theme.Wedding" parent="android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>
-        <item name="android:colorAccent">#791E35</item>
-        <item name="android:statusBarColor">#641727</item>
-        <item name="android:navigationBarColor">#23181B</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:colorAccent">#246358</item>
+        <item name="android:statusBarColor">#F4F6F5</item>
+        <item name="android:navigationBarColor">#F4F6F5</item>
+        <item name="android:windowLightStatusBar">true</item>
+    <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>
