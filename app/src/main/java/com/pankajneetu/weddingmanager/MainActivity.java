@@ -48,33 +48,31 @@ public final class MainActivity extends Activity {
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setBackgroundColor(Color.WHITE);
+        root.setBackgroundColor(Color.rgb(244,246,245));
 
-        LinearLayout toolbar = new LinearLayout(this);
-        toolbar.setOrientation(LinearLayout.HORIZONTAL);
-        toolbar.setPadding(dp(14),dp(8),dp(10),dp(8));
-        toolbar.setGravity(Gravity.CENTER_VERTICAL);
-        toolbar.setBackgroundColor(Color.rgb(121,30,53));
-        TextView title = new TextView(this);
-        title.setText("Pankaj & Neetu • Wedding");
-        title.setTextColor(Color.WHITE);
-        title.setTextSize(16);
-        title.setMaxLines(1);
-        toolbar.addView(title, new LinearLayout.LayoutParams(0,dp(40),1));
-        Button reload = new Button(this);
-        reload.setText("↻");
-        reload.setContentDescription("Reload the wedding app");
-        reload.setTextSize(18);
-        reload.setOnClickListener(v -> webView.reload());
-        toolbar.addView(reload,new LinearLayout.LayoutParams(dp(55),dp(48)));
-        root.addView(toolbar);
+        // The redesigned website owns the header and mobile navigation.
+        // Don't duplicate it with a native toolbar.
+        if (android.os.Build.VERSION.SDK_INT >= 35) {
+            root.setOnApplyWindowInsetsListener((view, insets) -> {
+                android.graphics.Insets bars = insets.getInsets(
+                    android.view.WindowInsets.Type.statusBars() |
+                    android.view.WindowInsets.Type.navigationBars());
+                view.setPadding(0, bars.top, 0, bars.bottom);
+                return insets;
+            });
+        }
+        getWindow().getDecorView().setSystemUiVisibility(
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
+            View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+
+
 
         loading = new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
         loading.setMax(100);
         root.addView(loading,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,dp(3)));
 
         offlineLabel = new TextView(this);
-        offlineLabel.setText("Connection unavailable. Cached screens may still work; use ↻ to retry.");
+        offlineLabel.setText("Connection unavailable. Tap this message to retry.");
         offlineLabel.setTextColor(Color.rgb(120,54,23));
         offlineLabel.setBackgroundColor(Color.rgb(255,242,224));
         offlineLabel.setPadding(dp(12),dp(8),dp(12),dp(8));
@@ -82,6 +80,7 @@ public final class MainActivity extends Activity {
         root.addView(offlineLabel);
 
         webView = new WebView(this);
+        offlineLabel.setOnClickListener(v -> webView.reload());
         webView.setBackgroundColor(Color.WHITE);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         root.addView(webView,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0,1));
