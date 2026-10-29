@@ -27,3 +27,7 @@ Debug APK builds are for personal/sideload distribution, not Google Play. For Pl
 - No private ticket PDFs, guest lists, passwords, or API secrets are committed to this public repository.
 
 Build verification: APK compilation and on-device E2E testing must be confirmed before use.
+
+## Web hosting separation
+
+The production wedding website is maintained as its own Vercel API deployment. This Android repository is only the APK wrapper; its Git pushes must **not** replace the wedding website's HTML on Vercel. The linked Vercel project's Ignored Build Step is configured to skip Git builds (`exit 0`).
