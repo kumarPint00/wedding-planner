@@ -25,3 +25,5 @@ Debug APK builds are for personal/sideload distribution, not Google Play. For Pl
 - Real Supabase E2E synchronization requires a connected Supabase project and login; the build alone cannot activate the backend.
 - Photos and evidence stay private in Android app-local storage unless your Supabase Storage bucket is properly configured.
 - No private ticket PDFs, guest lists, passwords, or API secrets are committed to this public repository.
+
+Build verification: APK compilation and on-device E2E testing must be confirmed before use.
