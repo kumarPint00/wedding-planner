@@ -1,0 +1,22 @@
+
+/* v77 Shopping Quick Add popup + contextual return */
+body.ps-dialog-open{overflow:hidden}
+.ps-workspace .ps-dialog[hidden]{display:none!important}
+.ps-workspace .ps-dialog{position:fixed;inset:0;z-index:1300;display:flex;align-items:center;justify-content:center;margin:0;padding:14px;scroll-margin-top:0}
+.ps-dialog-backdrop{position:absolute;inset:0;background:rgba(12,30,24,.68);backdrop-filter:blur(2px)}
+.ps-dialog-sheet{position:relative;z-index:1;width:min(680px,100%);max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;background:#fff;padding:22px;border-radius:17px;box-shadow:0 20px 80px rgba(12,40,22,.25)}
+.ps-dialog-sheet .ps-add-head{position:sticky;top:-22px;z-index:4;background:#fff;padding:8px 0 13px;border-bottom:1px solid #e2ebe4;margin:0 0 14px}
+.ps-dialog-sheet #addShoppingForm{padding:0!important;margin:0!important;box-shadow:none!important;background:#fff;border:0!important}
+.ps-dialog-sheet #addShoppingForm button[type=submit]{position:sticky;bottom:0;z-index:2;padding:13px;min-height:43px;box-shadow:0 -2px 15px #ffffffbc}
+.ps-quick-add{position:fixed;z-index:180;right:16px;bottom:22px;min-height:46px;cursor:pointer;border:0;border-radius:100px;background:#216e50;color:#fff;font:750 13px system-ui,sans-serif;padding:10px 20px;box-shadow:0 9px 28px rgba(19,70,40,.25)}
+.ps-quick-add:focus-visible{outline:3px solid #a4dabb;outline-offset:3px}
+.ps-item.ps-new-record{outline:3px solid #68b98d;outline-offset:1px;background:#f3fcf6;box-shadow:0 0 0 7px #8cd1a83b}
+.ps-item .batch-row:focus{outline:2px solid #3fa36c;outline-offset:3px}
+.ps-item .shopping-batch-panel [data-batch-form]:not([hidden]){margin:11px 0;padding:13px;border-radius:11px;background:#fdfcf7;border:2px solid #b1d5bf;scroll-margin-top:70px}
+@media(max-width:700px){
+ .ps-workspace .ps-dialog{padding:0;align-items:flex-end}
+ .ps-dialog-sheet{border-radius:17px 17px 0 0;width:100%;max-height:94dvh;padding:18px 15px max(22px,env(safe-area-inset-bottom))}
+ .ps-dialog-sheet .ps-add-head{top:-18px}
+ .ps-quick-add{right:14px;bottom:calc(79px + env(safe-area-inset-bottom));padding:11px 17px}
+}
+@media(prefers-reduced-motion:reduce){.ps-item.ps-new-record{animation:none}}

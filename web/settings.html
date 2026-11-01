@@ -1,0 +1,110 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#741f31"><link rel="manifest" href="/manifest.webmanifest"><title>Settings</title><link rel="stylesheet" href="/app.css"><link rel="stylesheet" href="/manager.css"></head><body><div class="top"><div class="header"><div class="brand"><div class="mark">श्री</div><div><b>Pankaj & Neetu Wedding</b><small>Planner • Evidence • Memory Diary</small></div></div><div class="dbpill" data-db>Loading…</div></div><nav class="nav"><a class="" href="/">Dashboard</a><a class="" href="/tasks.html">Tasks</a><a class="" href="/expenses.html">Expenses</a><a class="" href="/vendors.html">Vendors</a><a class="" href="/shopping.html">Shopping</a><a class="" href="/gifts.html">Gifts</a><a class="" href="/payments.html">Cash & Payments</a><a class="" href="/contacts.html">Contacts</a><a class="" href="/inventory.html">Inventory</a><a class="" href="/guests.html">Guests & Rooms</a><a class="" href="/food.html">Food</a><a class="" href="/events.html">Functions</a><a class="" href="/invitations.html">Invitations</a><a class="" href="/calendar.html">Calendar</a><a class="" href="/media.html">Media</a><a class="" href="/diary.html">Memories</a><a class="" href="/documents.html">Documents</a><a class="" href="/history.html">History</a><a class="" href="/travel.html">Travel</a><a class="active" href="/settings.html">Settings</a><button id="installApp" class="pwa-install" hidden>Install App</button></nav></div><main class="wrap"><div class="grid2"><div class="panel"><h3>Budget settings</h3><div class="field"><label>Hard cap ₹</label><input id="hardCap" type="number"></div><div class="field" style="margin-top:10px"><label>Emergency reserve target ₹</label><input id="reserveTarget" type="number"></div><button id="saveSettings" class="btn green" style="margin-top:10px">Save settings</button></div><div class="panel"><h3>Planner Backup</h3><div class="toolbar"><button id="exportBtn" class="btn">Export DB</button><label class="btn alt">Import DB<input id="importInput" type="file" accept="application/json" hidden></label><button id="resetBtn" class="btn warn">Reset all</button></div></div></div>
+<div id="dashboard-slideshow" class="section-title"><div><h2>Dashboard Slideshow</h2><p>Choose and order the real photos shown automatically on the home dashboard.</p></div></div>
+<div class="panel">
+  <div class="slideshow-settings-row">
+    <label class="toggle-line"><input id="slideshowEnabled" type="checkbox"> Automatic slideshow</label>
+    <div class="field compact"><label>Change photo every</label><select id="slideshowInterval"><option value="3">3 seconds</option><option value="5">5 seconds</option><option value="7">7 seconds</option><option value="10">10 seconds</option><option value="15">15 seconds</option><option value="20">20 seconds</option><option value="30">30 seconds</option></select></div>
+    <div class="mini"><b id="slideshowSelectedCount">0</b> selected</div>
+  </div>
+  <div class="toolbar"><label class="btn green">Add slideshow photos<input id="slideshowFiles" type="file" accept="image/*" multiple hidden></label><label class="btn">Take photo<input id="slideshowCamera" type="file" accept="image/*" capture="environment" hidden></label><button id="slideshowUseAll" class="btn alt" type="button">Use all photos</button><button id="slideshowClear" class="btn warn" type="button">Clear selection</button></div>
+  <div class="note">Only selected images appear on the dashboard. Reordering here changes the carousel order. Images remain in the Media Library even when removed from the slideshow.</div>
+</div>
+<div id="slideshowImageManager" class="slide-manager-grid"></div><div class="section-title"><div><h2>Full Evidence Backup</h2><p>Planner + actual local image/PDF bytes.</p></div></div><div class="panel"><div class="toolbar"><button id="exportFullBackup" class="btn green">Export Full Evidence Backup</button><label class="btn alt">Restore Full Backup<input id="importFullBackup" type="file" accept="application/json" hidden></label></div><div class="note">This backup can be large because it contains the actual media bytes.</div></div>
+<div class="section-title" id="private-cloud"><div><h2>Secure Supabase Sync & Recovery</h2><p>Private, authenticated and conflict-safe • Free tier only</p></div></div>
+<div class="panel"><div class="alert">The old anonymous shared database mode does not protect private wedding records. Use this sign-in-based option for confidential guest, photo and payment data. Configure a free Supabase project before activating.</div>
+<div id="privateFeedback" class="alert"></div><div class="mini"><span id="prMode"></span> · <span id="prPending"></span></div>
+<div class="formgrid"><div class="field span2"><label>Supabase project URL</label><input id="prUrl" type="url" placeholder="https://example.supabase.co"></div><div class="field span2"><label>Publishable / anon key (NEVER service_role key)</label><input id="prKey" type="password"></div></div>
+<div class="toolbar"><button id="prConnect" class="btn green" type="button">Enable Private Sync</button><button id="prLocal" class="btn alt" type="button">Return to Local / Legacy</button></div>
+<div class="formgrid"><div class="field"><label>Account email</label><input id="prMail" type="email"></div><div class="field"><label>Password</label><input id="prPass" type="password"></div></div>
+<div class="toolbar"><button id="prSignup" class="btn alt">Sign up</button><button id="prLogin" class="btn green">Sign in</button><button id="prSync" class="btn alt">Sync / Verify</button><button id="prLogout" class="btn alt">Sign out</button></div>
+<div class="alert" id="privateConflict" hidden><b>Data conflict</b><p id="privateConflictReason"></p><div class="toolbar"><button id="prCloud" class="btn alt" type="button">Use Cloud copy</button><button id="prKeep" class="btn" type="button">Keep Local copy</button></div></div>
+<div class="note">Uses one authenticated account across devices. Separate family logins are not enabled yet. Files still require private Supabase Storage bucket setup in the existing Evidence Storage section.</div></div>
+<div class="panel" style="margin-top:12px"><h3>One-time private database SQL</h3><textarea id="prSql" class="textarea" rows="14" readonly style="font:11px monospace">-- Wedding Planner: private user-owned state (Supabase Free)
+CREATE TABLE IF NOT EXISTS public.wedding_private_state (
+  user_id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  revision bigint NOT NULL DEFAULT 1,
+  state jsonb NOT NULL,
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+
+ALTER TABLE public.wedding_private_state ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON public.wedding_private_state FROM anon;
+GRANT SELECT, INSERT, UPDATE ON public.wedding_private_state TO authenticated;
+
+DROP POLICY IF EXISTS wedding_private_read ON public.wedding_private_state;
+DROP POLICY IF EXISTS wedding_private_create ON public.wedding_private_state;
+DROP POLICY IF EXISTS wedding_private_edit ON public.wedding_private_state;
+
+CREATE POLICY wedding_private_read ON public.wedding_private_state
+FOR SELECT TO authenticated USING ((SELECT auth.uid()) = user_id);
+
+CREATE POLICY wedding_private_create ON public.wedding_private_state
+FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) = user_id);
+
+CREATE POLICY wedding_private_edit ON public.wedding_private_state
+FOR UPDATE TO authenticated
+USING ((SELECT auth.uid()) = user_id)
+WITH CHECK ((SELECT auth.uid()) = user_id);
+</textarea><button type="button" id="prCopy" class="btn alt">Copy SQL</button></div>
+<div class="section-title" id="recovery"><div><h2>Recovery Snapshots</h2><p>Before schema upgrade and every 30 minutes of editing • eight retained</p></div></div>
+<div class="panel"><button id="prSnapshot" class="btn green">Save Snapshot</button><div id="snapshotList"></div><div class="note">These snapshots cover planner data only. For image/PDF backups, use Export Full Evidence Backup above.</div></div><div class="section-title"><div><h2>Legacy Anonymous Sync — Existing Setups Only</h2><p>This mode is not private and is not recommended for guest, payment, photo or family data.</p></div></div>
+<div id="cloudStatus" class="alert"></div>
+<div class="panel">
+  <h3>Shared wedding workspace</h3>
+  <div class="grid2">
+    <div class="field"><label>Project URL</label><input id="supabaseUrl" value="https://acnmdjldpacwgetfsjnp.supabase.co" placeholder="https://xxxx.supabase.co"></div>
+    <div class="field"><label>Publishable key (sb_publishable_...)</label><input id="supabaseAnonKey" type="password"></div>
+  </div>
+  <div class="field"><label>Wedding key</label><input id="weddingKey" value="pankaj-neetu-2026"></div>
+  <div class="toolbar">
+    <button id="saveCloudConfig" class="btn warn">Reconnect legacy mode (not private)</button>
+    <button id="syncNow" class="btn">Sync now</button>
+    <button id="pullCloud" class="btn alt">Reconcile from shared DB</button>
+    <button id="disconnectCloud" class="btn warn">Disconnect shared DB</button>
+  </div>
+  <div class="note">Warning: anonymous access policies may allow anyone with the project address and published key to read or change the wedding data. Use private sign-in sync above and revoke legacy anon access after migrating.</div>
+</div>
+<div class="panel" style="margin-top:12px"><h3>Deprecated shared-table setup (do not run)</h3><p class="lead">The older SQL grants anonymous access. New projects should use the secure SQL above instead.</p><textarea id="supabaseSql" class="textarea" readonly style="min-height:300px;font-family:monospace;font-size:11px"></textarea><button id="copySql" class="btn alt" disabled title="Use the private SQL above">Deprecated: unsafe SQL disabled</button></div>
+<div class="panel" style="margin-top:12px"><h3>Evidence files</h3><p class="lead">Planner state is account-free now. Existing photo/PDF cloud storage remains on the previous authenticated storage model; local evidence still works normally.</p></div>
+<div class="section-title"><div><h2>Legacy Data Recovery</h2></div></div><div class="panel"><p id="legacyStatus" class="lead"></p><button id="recoverLegacy" class="btn alt">Scan & recover old local data</button></div><div class="section-title" id="duplicate-audit"><div><h2>Duplicate Audit & Cleanup</h2><p>Safe duplicate cleanup across modules, original records archived</p></div></div><div class="panel"><div class="toolbar"><button type="button" id="integrityScan" class="btn alt">Scan all modules</button><button type="button" id="integrityCleanup" class="btn green">Merge safe duplicates</button><a class="btn alt" href="/history.html">Cleanup history</a></div><div class="note">Identical duplicates are safely archived. Different payments, vendor bookings, relatives and purchase batches remain separate. For uncertain task matches, use Review to choose a record after a recovery snapshot.</div><div id="integrityAuditResults"></div></div></main><div class="footer">Pankaj Kumar × Neetu • Wedding 5 Dec 2026</div><div class="toast"></div><script>
+/* SQL and copy work independently of IndexedDB / other Settings initialization. */
+(function(){
+  const sql=document.getElementById('prSql'),button=document.getElementById('prCopy');
+  if(!sql||!button)return;
+  button.addEventListener('click',async function(){
+    try{
+      await navigator.clipboard.writeText(sql.value);
+      button.textContent='Copied SQL ✓';
+    }catch(error){
+      sql.focus();sql.select();
+      const copied=document.execCommand&&document.execCommand('copy');
+      button.textContent=copied?'Copied SQL ✓':'Select and copy the SQL above';
+    }
+  });
+})();
+</script><script src="/defaults.js"></script><script src="/core.js"></script><script src="/pwa.js"></script><script>
+(async function(){
+  const failure=(name,error)=>{
+    console.error('Settings '+name+' failed:',error);
+    const el=document.getElementById('privateFeedback');
+    if(el){el.className='alert';el.textContent='Settings '+name+': '+(error?.message||error);}
+  };
+  // Connect the button immediately; no dependency on load, backup, or slideshow setup.
+  try{privateCloudSetup()}catch(e){failure('private sync initialization',e)}
+  try{await load()}catch(e){failure('local database loading',e);return}
+  for(const [name,fn] of [
+    ['backup',()=>backupSetup()],
+    ['dashboard totals',()=>updateKpis()],
+    ['legacy cloud settings',()=>cloudSettingsInit()],
+    ['evidence backup',()=>setupFullEvidenceBackup()],
+    ['slideshow',()=>setupDashboardSlideshowSettings()],
+    ['duplicate audit',()=>integritySetupAudit()]
+  ]){
+    try{await fn()}catch(e){console.warn('Optional Settings '+name+' failed',e)}
+  }
+  // Retry only if earlier private setup itself failed.
+  if(!document.getElementById('prConnect').onclick){
+    try{privateCloudSetup()}catch(e){failure('private sync initialization',e)}
+  }
+})();
+</script></body></html>
