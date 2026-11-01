@@ -1,0 +1,45 @@
+{
+  "id": "/",
+  "name": "Pankaj ki Shadi",
+  "short_name": "Pankaj ki Shadi",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f6f5",
+  "theme_color": "#1e343d",
+  "orientation": "portrait-primary",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Memories",
+      "url": "/diary.html"
+    },
+    {
+      "name": "Media",
+      "url": "/media.html"
+    },
+    {
+      "name": "Tasks",
+      "url": "/tasks.html"
+    },
+    {
+      "name": "Expenses",
+      "url": "/expenses.html"
+    }
+  ],
+  "description": "Wedding planner and family memory diary for Pankaj ki Shadi"
+}

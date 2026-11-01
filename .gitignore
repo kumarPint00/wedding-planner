@@ -1,0 +1,21 @@
+# Secrets, receipts, media and app-local backups
+.env
+.env.*
+!.env.example
+*.apk
+*.aab
+*.keystore
+*.jks
+*.pem
+*.p12
+*.pfx
+*.sqlite
+*.sqlite3
+*.db
+node_modules/
+backups/
+receipts/
+user-data/
+media-private/
+web/private/
+.vercel/

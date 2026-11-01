@@ -1,0 +1,19 @@
+name: Web code and asset checks
+on:
+  pull_request:
+    paths: ['web/**', '.github/workflows/web-ci.yml']
+  push:
+    branches: [main]
+    paths: ['web/**', '.github/workflows/web-ci.yml']
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check all JavaScript files
+        run: find web -maxdepth 1 -name '*.js' -print0 | xargs -0 -n 1 node --check
+      - name: Verify PWA and HTML assets
+        run: node web/check-assets.mjs

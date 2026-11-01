@@ -1,0 +1,67 @@
+
+.ps-workspace{--ps-border:#dfe9e2}.ps-workspace .studio-intro{display:none}
+.ps-hero{display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:15px;margin-bottom:21px}
+.ps-hero small{font-size:10px;color:#478570;font-weight:800;letter-spacing:.15em}.ps-hero h1{font:700 clamp(29px,3vw,40px)/1.15 Georgia,serif;margin:7px 0;color:#2d493e;letter-spacing:-.04em}.ps-hero p{font-size:12px;color:#7d8f83;margin:0}
+.ps-hero-actions{display:flex;gap:9px;flex-wrap:wrap}
+.ps-dashboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ps-dashboard article{padding:18px;border:1px solid var(--ps-border);background:white;border-radius:15px;box-shadow:0 4px 17px #183d280b;min-width:0}
+.ps-dashboard span{display:block;font-size:11px;color:#758c7e;font-weight:700}
+.ps-dashboard strong{display:block;color:#27634e;margin:8px 0;font-size:clamp(19px,2vw,28px);overflow-wrap:anywhere;letter-spacing:-.04em}
+.ps-dashboard small{display:block;color:#98a79b;font-size:10px}
+.ps-progress{background:#edf5ee;border:1px solid #dceadd;border-radius:12px;margin:14px 0 23px;padding:13px 17px}
+.ps-progress>div:first-child{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#6b8071}
+.ps-progress-track,.ps-line{height:7px;background:#d7e7db;border-radius:20px;overflow:hidden;margin-top:10px}
+.ps-progress-track i,.ps-line i{display:block;height:100%;background:#4aa782;border-radius:20px}
+.ps-layout{display:grid;grid-template-columns:minmax(0,1fr) 238px;gap:18px;align-items:start}.ps-main{min-width:0}
+.ps-controls{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(120px,.9fr) minmax(110px,.7fr);gap:10px;padding:14px;border:1px solid var(--ps-border);background:#fff;border-radius:14px}
+.ps-controls label{display:block;margin-bottom:6px;color:#758a7c;font-size:10px;font-weight:750}
+.ps-controls input,.ps-controls select{min-width:0;width:100%;min-height:38px;background:#fbfdfb;border:1px solid #d9e7dc;border-radius:9px;padding:8px 10px;color:#345847;font-size:12px}
+.ps-tabs{display:flex;gap:5px;padding:13px 0 9px;overflow-x:auto;scrollbar-width:none}.ps-tabs button{background:transparent;border:1px solid transparent;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:740;color:#798b80;cursor:pointer;white-space:nowrap}
+.ps-tabs button.active{background:#e6f3e9;color:#246b51;border-color:#d2e6d6}.ps-tabs b{border-radius:5px;background:#fff;padding:1px 5px}
+.ps-list-head{display:flex;justify-content:space-between;align-items:center;margin:10px 2px 13px;gap:12px}.ps-list-head b{display:block;font-size:15px;color:#2d5a47}.ps-list-head small{display:block;color:#93a395;font-size:10px}.ps-list-head a{font-size:11px;color:#2b7b58;font-weight:750}
+.ps-list{display:grid;gap:10px}
+.ps-item{background:white;border:1px solid var(--ps-border);border-radius:15px;padding:16px;min-width:0;box-shadow:0 3px 13px #143b2809}
+.ps-item-header{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.ps-item-header>div{min-width:0}
+.ps-category-label{font-size:10px;color:#47866b;font-weight:750}
+.ps-item h3{font-size:15px;color:#2f4d40;margin:5px 0;overflow-wrap:anywhere}
+.ps-item-header small{font-size:11px;color:#8ea092}
+.ps-state{border-radius:8px;padding:5px 8px;background:#fbf0dc;color:#926b31;font-size:10px;font-weight:750;white-space:nowrap}
+.ps-state.partial{background:#e9f0fa;color:#4d6fa0}.ps-state.purchased{background:#e6f6e9;color:#2c7953}.ps-state.skipped{background:#eff1ef;color:#819081}
+.ps-money{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:13px 0;margin:13px 0;border-top:1px solid #edf2ed;border-bottom:1px solid #edf2ed}
+.ps-money span{display:block;color:#8b9e91;font-size:10px}.ps-money b{display:block;color:#2d644e;font-size:14px;margin-top:4px;overflow-wrap:anywhere}
+.ps-qty{display:flex;justify-content:space-between;font-size:11px;color:#6e8876}
+.ps-line{height:5px;background:#e4eee6;margin:8px 0 13px}
+.ps-buttons{display:flex;gap:7px;flex-wrap:wrap}.ps-buttons .btn{font-size:10px;padding:7px 11px;min-height:33px}
+.ps-details{margin-top:12px;border-top:1px solid #edf2ec}
+.ps-details summary{cursor:pointer;display:flex;justify-content:space-between;gap:10px;color:#367659;font-size:11px;font-weight:750;padding-top:13px;list-style:none}
+.ps-details summary::-webkit-details-marker{display:none}
+.ps-cost-slot{padding-top:12px}.ps-cost-slot .cost-card{margin:0;background:#fbfdfb;border:1px solid #e2ede4;border-radius:11px;padding:13px;box-shadow:none}
+.ps-cost-slot .cost-card>h3{display:none}
+.ps-guidance{display:grid;gap:12px}
+.ps-guidance article{background:#fff;border:1px solid var(--ps-border);padding:19px;border-radius:14px}
+.ps-guidance h3{font-size:14px;color:#33624d;margin:10px 0}.ps-guidance p,.ps-guidance li{font-size:11px;color:#798d7f;line-height:1.7}
+.ps-guidance ol{padding-left:18px}.ps-guidance a{color:#2a7c58;font-size:11px;font-weight:750}
+.ps-symbol{display:grid;place-items:center;background:#e9f5eb;color:#317456;height:37px;width:37px;border-radius:10px;font-size:21px}
+.ps-add-panel{margin-top:23px;scroll-margin-top:85px}.ps-add-head{display:flex;justify-content:space-between;align-items:center;gap:13px;margin-bottom:12px}.ps-add-head h2{font-size:20px;color:#35614a;margin:0}.ps-add-head p{font-size:11px;color:#899c8d}
+.ps-below{display:grid;gap:12px;margin-top:24px}
+.ps-below details{background:#fff;border:1px solid var(--ps-border);border-radius:14px;overflow:hidden}
+.ps-below summary{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:17px;color:#2d7450;cursor:pointer;list-style:none}
+.ps-below summary::-webkit-details-marker{display:none}
+.ps-below summary b,.ps-below summary small{display:block}.ps-below summary small{color:#91a195;font-size:11px;margin-top:4px}
+.ps-below .table-wrap,.ps-below .evidence-upload,.ps-below #shoppingMediaGrid{margin:12px}
+.ps-workspace [hidden]{display:none!important}
+.ps-empty{text-align:center;padding:40px 14px;background:white;border:1px dashed #b8d9c2;border-radius:14px;color:#839487}.ps-empty h3{color:#316e4c}
+@media(max-width:1200px){.ps-layout{grid-template-columns:1fr}.ps-guidance{display:none}}
+@media(max-width:700px){.ps-dashboard{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.ps-dashboard article{padding:13px}.ps-dashboard strong{font-size:21px}.ps-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.ps-search{grid-column:span 2}.ps-item{padding:13px}.ps-money b{font-size:13px}}
+@media(max-width:390px){.ps-dashboard strong{font-size:18px}}
+
+/* v78: "remaining" means allocated budget minus purchase total (never payment balance). */
+.ps-workspace .ps-dashboard article.ps-overbudget{border-color:#f0c6b9;background:#fff8f6}
+.ps-workspace .ps-dashboard article.ps-overbudget strong{color:#bb4637}
+.ps-workspace .ps-dashboard #psDueNote{line-height:1.35}
+.ps-workspace .ps-money>div.ps-overbudget{background:#fff0eb;border:1px solid #f2c1b4;border-radius:9px;padding:6px}
+.ps-workspace .ps-money>div.ps-overbudget span,.ps-workspace .ps-money>div.ps-overbudget b{color:#b63f30}
+.ps-workspace .ps-money>div.ps-overbudget small{display:block;font-size:10px;color:#b63f30;margin-top:3px}
+.ps-workspace .ps-payment-note{font-size:10px;color:#647b6b;margin:-7px 0 11px}
+.ps-workspace .ps-payment-note b{color:#426452}
