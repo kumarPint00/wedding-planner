@@ -34,3 +34,13 @@ Android WebView storage is distinct from Chrome's IndexedDB/localStorage. **Do n
 The repository is **public**. Do not commit personal contacts, purchased-item data exports, scanned receipts, photographs, environment files, Supabase service-role keys, access tokens or APK signing credentials. Personal phone numbers were removed from the web source seed records when the deployed files were mirrored. Private runtime records remain outside GitHub.
 
 No paid infrastructure is required for the static web app or the existing Android debug workflow. Supabase connectivity requires independent configuration and verification.
+
+## Continuous web deployment
+
+The optional GitHub Actions workflow [Deploy web to existing Vercel site](.github/workflows/vercel-web-deploy.yml) targets the **same existing Vercel project and domain** instead of creating a second deployment origin. It is deliberately disabled until you add the `VERCEL_TOKEN` repository secret. To enable:
+
+1. Generate a Vercel API token with access to the existing Vercel team/project.
+2. In GitHub open **Settings → Secrets and variables → Actions → New repository secret**, name it `VERCEL_TOKEN`, and paste the token.
+3. Run **Actions → Deploy web to existing Vercel site → Run workflow**, then check the deployed website. Subsequent changes under `web/` on `main` will deploy automatically.
+
+No token is stored in the repository. The workflow uses the existing `VERCEL_PROJECT_ID` and `VERCEL_ORG_ID` and skips safely when `VERCEL_TOKEN` is absent. Do not change the live domain or clear local data as part of source migration.

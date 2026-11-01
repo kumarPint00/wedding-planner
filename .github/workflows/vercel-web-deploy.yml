@@ -1,0 +1,40 @@
+name: Deploy web to existing Vercel site
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - '.github/workflows/vercel-web-deploy.yml'
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      VERCEL_ORG_ID: team_rbUj4Sy1UJwvVIqdwwNXSG3G
+      VERCEL_PROJECT_ID: prj_tZ0crrI0GNIjIQH4irCJuYSZvos0
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check whether Vercel publishing is enabled
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo 'SKIP_DEPLOY=true' >> "$GITHUB_ENV"
+            echo 'Vercel deployment skipped: configure repository Actions secret VERCEL_TOKEN to enable publishing.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Pull existing Vercel project configuration
+        if: env.SKIP_DEPLOY != 'true'
+        run: npx --yes vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+      - name: Build static web app for existing Vercel project
+        if: env.SKIP_DEPLOY != 'true'
+        run: npx --yes vercel@latest build --prod --token="$VERCEL_TOKEN"
+      - name: Publish to the existing production domain
+        if: env.SKIP_DEPLOY != 'true'
+        run: npx --yes vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN"
