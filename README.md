@@ -1,33 +1,36 @@
-# Pankaj & Neetu Wedding Manager — Android
+# Pankaj & Neetu Wedding Manager
 
-This is the native Android shell for the existing Wedding Manager at:
+This repository now contains the **complete deployed static web/PWA application** and the **Android WebView app**.
 
-https://pankaj-wedding-roadtrip-checklist.vercel.app/
+| Path | Purpose |
+| --- | --- |
+| [web/](web/) | HTML, CSS, JS, service worker, offline PWA, Shopping, family checklist, expenses, payments, media, invitations, and reminders |
+| [app/](app/) | Android Java WebView wrapper and native file/camera/download integration |
+| [.github/workflows/android-apk.yml](.github/workflows/android-apk.yml) | Android debug APK build |
+| [.github/workflows/web-ci.yml](.github/workflows/web-ci.yml) | Web asset integrity and syntax checks |
 
-It loads the existing HTTPS web app inside Android WebView, including Tasks, Shopping, Guests, Media, private Supabase sign-in, and Travel. It adds Android Back handling, native file selection (multiple images, PDFs and JSON), camera capture, and HTTP(S) downloads.
+## Web application
 
-## Important data migration
+Current existing URL: https://pankaj-wedding-roadtrip-checklist.vercel.app/
 
-Android WebView does **not** share IndexedDB or localStorage with Chrome. Your old browser edits will not automatically appear inside the APK.
+Run locally:
 
-Before switching, export a **Full Evidence Backup** in the web browser (Settings). In the APK, use **Restore Full Backup** on Settings. Alternatively, finish the **Private Cloud** Supabase setup in the browser, verify synchronization, and sign into the same account in the APK. Do not delete the Chrome/PWA data until you verify all records and photos in Android.
+```bash
+python3 -m http.server 8080 --directory web
+```
 
-## Free debug APK build
+Then open http://localhost:8080.
 
-GitHub Actions builds a debug-signed installable APK when code changes are pushed. Open **Actions → Android APK** and download the `wedding-manager-debug-apk` artifact.
+**Vercel:** connect this repository to the existing Vercel project, set **Root Directory = web**, **Framework = Other** and leave Build Command blank. The existing Vercel project was previously deployed via API without repository linkage. Until that connection is made, GitHub pushes do **not** automatically publish to the existing URL. Read [web/README.md](web/README.md) for migration safeguards.
 
-Debug APK builds are for personal/sideload distribution, not Google Play. For Play Store, create and securely manage your own release signing key and complete store publication checks.
+## Android application
 
-## Notes
+The Android shell launches the above HTTPS URL in WebView. It includes Android Back handling, multi-file selection (images, PDFs and JSON), camera capture and downloads. The existing GitHub Actions workflow builds the debug APK; see Actions → Android APK.
 
-- Requires internet on first launch; the PWA's service worker cache may support some offline screens after they are visited, but cloud sync and uploads need network.
-- Android 10+ (API 29), and a working Android System WebView.
-- Real Supabase E2E synchronization requires a connected Supabase project and login; the build alone cannot activate the backend.
-- Photos and evidence stay private in Android app-local storage unless your Supabase Storage bucket is properly configured.
-- No private ticket PDFs, guest lists, passwords, or API secrets are committed to this public repository.
+Android WebView storage is distinct from Chrome's IndexedDB/localStorage. **Do not clear application storage or uninstall the app until you have exported and verified a Full Evidence Backup or completed private cloud sync.** A GitHub migration moves source files, not private browser data.
 
-Build verification: APK compilation and on-device E2E testing must be confirmed before use.
+## Security and privacy
 
-## Web hosting separation
+The repository is **public**. Do not commit personal contacts, purchased-item data exports, scanned receipts, photographs, environment files, Supabase service-role keys, access tokens or APK signing credentials. Personal phone numbers were removed from the web source seed records when the deployed files were mirrored. Private runtime records remain outside GitHub.
 
-The production wedding website is maintained as its own Vercel API deployment. This Android repository is only the APK wrapper; its Git pushes must **not** replace the wedding website's HTML on Vercel. The linked Vercel project's Ignored Build Step is configured to skip Git builds (`exit 0`).
+No paid infrastructure is required for the static web app or the existing Android debug workflow. Supabase connectivity requires independent configuration and verification.
